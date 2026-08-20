@@ -1,0 +1,5 @@
+[book]
+authors = ["FuzzingLabs contributors", "Vertexy contributors"]
+language = "en"
+src = "src"
+title = "Vertexy Documentation"
