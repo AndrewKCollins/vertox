@@ -1,0 +1,26 @@
+Vertexy
+=======
+
+Vertexy is a modified work based on the sol-azy project originally published by
+FuzzingLabs and contributors:
+
+    https://github.com/FuzzingLabs/sol-azy
+
+The upstream work is licensed under the Server Side Public License v1 (SSPL-1.0).
+Vertexy is distributed under the same license. See LICENSE.
+
+Prominent modification notice
+-----------------------------
+
+This distribution has been modified from the upstream sol-azy project.
+Vertexy modifications began on 2026-08-20 and include, among other changes:
+
+- rebranding the project and CLI as Vertexy;
+- restructuring public CLI names and help text while retaining migration aliases;
+- propagating command failures as non-zero process exits for automation use;
+- adding public repository documentation and community files;
+- adding CI, documentation, dependency-update, and release automation;
+- adding project artwork and refreshed usage documentation.
+
+Original authorship notices and rule-author metadata are retained where they
+appear in the source. This notice does not imply endorsement by FuzzingLabs.
