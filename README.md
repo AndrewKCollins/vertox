@@ -4,7 +4,7 @@
 
 <h1 align="center">Vertexy</h1>
 
-<h1 align="center"> $VERTEXY - CA: </h1>
+<h1 align="center"> $VERTEXY - CA: 3roS1SYir8EAYJT2R3hTW8otScCFHrj4eTV2GW4npump </h1>
 
 <p align="center">
   Solana program security analysis and sBPF reverse-engineering toolkit.
