@@ -4,6 +4,8 @@
 
 <h1 align="center">Vertexy</h1>
 
+<h1 align="center">CA: xx</h1>
+
 <p align="center">
   Solana program security analysis and sBPF reverse-engineering toolkit.
 </p>
