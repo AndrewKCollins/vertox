@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" width="220" alt="VERTOX logo">
+  <img src="assets/logo1.png" width="220" alt="VERTOX logo">
 </p>
 
 <h1 align="center">VERTOX</h1>
