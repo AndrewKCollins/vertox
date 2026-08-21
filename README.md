@@ -4,7 +4,7 @@
 
 <h1 align="center">VERTOX</h1>
 
-<h1 align="center"> $VERTOX - CA: TBA </h1>
+<h1 align="center"> $VERTOX - CA: 5Vsom8FdhRNAwEe81ebsEA6aQEyc8RA9qHZF8rtbpump </h1>
 
 <p align="center">
   Solana program security analysis and sBPF reverse-engineering toolkit.
