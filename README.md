@@ -4,6 +4,8 @@
 
 <h1 align="center">VERTOX</h1>
 
+<h1 align="center"> CA: 0xd5Cf2F0D483a7D44A2432c56C0a49F54E3C47B66 </h1>
+
 <p align="center">
   Robinhood Chain smart-contract security analysis and EVM reverse-engineering toolkit.
 </p>
