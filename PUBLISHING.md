@@ -1,10 +1,10 @@
-# Publishing Vertexy on GitHub
+# Publishing VERTOX on GitHub
 
-The repository is designed to be pushed directly to a new GitHub repository named `vertexy`.
+The repository is configured for `https://github.com/AndrewKCollins/vertox`.
 
 ## First public push
 
-1. Create an empty GitHub repository named `vertexy` with `main` as the default branch.
+1. Use the GitHub repository `https://github.com/AndrewKCollins/vertox` with `main` as the default branch.
 2. Push this repository without replacing `LICENSE` or `NOTICE`.
 3. In **Settings → Pages**, choose **GitHub Actions** as the Pages source.
 4. In **Settings → Security**, enable private vulnerability reporting if it is available for the repository.
@@ -27,7 +27,7 @@ The live Solana RPC tests are ignored by default. Run them explicitly when you w
 cargo test -- --ignored
 ```
 
-Because Vertexy is a binary application, commit the generated `Cargo.lock` after the first successful Cargo build.
+Because VERTOX is a binary application, commit the generated `Cargo.lock` after the first successful Cargo build.
 
 ## Create a release
 
@@ -42,4 +42,4 @@ The release workflow builds binaries and attaches them to the GitHub release cre
 
 ## Attribution
 
-Vertexy is a modified work based on sol-azy by FuzzingLabs and contributors. Keep `LICENSE`, `NOTICE`, and the project-origin section of the README in public distributions.
+VERTOX is a modified work based on sol-azy by FuzzingLabs and contributors. Keep `LICENSE`, `NOTICE`, and the project-origin section of the README in public distributions.

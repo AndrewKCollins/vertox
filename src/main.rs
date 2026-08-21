@@ -1,6 +1,6 @@
-//! Vertexy CLI entry point.
+//! VERTOX CLI entry point.
 //!
-//! Vertexy is a Solana program analysis toolkit for source-level security scanning,
+//! VERTOX is a Solana program analysis toolkit for source-level security scanning,
 //! Anchor project review, on-chain program retrieval, and sBPF reverse engineering.
 
 mod commands;
@@ -20,11 +20,11 @@ use tracing_subscriber::fmt;
 
 #[derive(Parser)]
 #[command(
-    name = "vertexy",
+    name = "vertox",
     version,
     about = "Solana program security analysis and sBPF reverse-engineering toolkit",
-    long_about = "Vertexy helps auditors and Solana developers inspect source code, summarize Anchor account constraints, fetch deployed programs, and reverse engineer compiled sBPF binaries.",
-    after_help = "Examples:\n  vertexy scan -d ./program\n  vertexy recap -d ./anchor-project\n  vertexy fetch -p <PROGRAM_ID> -o ./out\n  vertexy reverse --mode both --bytecodes-file ./program.so --out-dir ./out --labeling"
+    long_about = "VERTOX helps auditors and Solana developers inspect source code, summarize Anchor account constraints, fetch deployed programs, and reverse engineer compiled sBPF binaries.",
+    after_help = "Examples:\n  vertox scan -d ./program\n  vertox recap -d ./anchor-project\n  vertox fetch -p <PROGRAM_ID> -o ./out\n  vertox reverse --mode both --bytecodes-file ./program.so --out-dir ./out --labeling"
 )]
 pub struct Cli {
     /// Increase logging verbosity. Repeat for trace-level logging.
@@ -47,7 +47,7 @@ pub enum Commands {
         #[arg(short = 'o', long = "out-dir")]
         out_dir: String,
 
-        /// Allow Vertexy to switch the local Anchor version when required.
+        /// Allow VERTOX to switch the local Anchor version when required.
         #[arg(long = "unsafe-version-switch", default_value_t = false)]
         unsafe_version_switch: bool,
     },
@@ -67,7 +67,7 @@ pub enum Commands {
         #[arg(long = "syn-scan-only", hide = true, default_value_t = false)]
         syn_scan_only: bool,
 
-        /// Disable Vertexy's bundled rules. Requires --rules-dir.
+        /// Disable VERTOX's bundled rules. Requires --rules-dir.
         #[arg(long = "no-internal-rules", action = ArgAction::SetFalse, default_value_t = true)]
         use_internal_rules: bool,
 
@@ -141,7 +141,7 @@ pub enum Commands {
         #[arg(short = 'f', long = "file-path")]
         file_path: String,
 
-        /// Emit the AST shape prepared for Vertexy Starlark rules.
+        /// Emit the AST shape prepared for VERTOX Starlark rules.
         #[arg(short = 's', long = "starlark-syn-ast", default_value_t = false)]
         starlark_syn_ast: bool,
     },
@@ -158,10 +158,10 @@ pub enum Commands {
 async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     let default_filter = match cli.verbose {
-        0 => "vertexy=warn",
-        1 => "vertexy=info",
-        2 => "vertexy=debug",
-        _ => "vertexy=trace",
+        0 => "vertox=warn",
+        1 => "vertox=info",
+        2 => "vertox=debug",
+        _ => "vertox=trace",
     };
 
     fmt::Subscriber::builder()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lightweight repository consistency checks for Vertexy."""
+"""Lightweight repository consistency checks for VERTOX."""
 
 from __future__ import annotations
 
@@ -51,10 +51,10 @@ def check_markdown_links(errors: list[str]) -> None:
 def check_branding(errors: list[str]) -> None:
     cargo = (ROOT / "Cargo.toml").read_text(encoding="utf-8")
     main = (ROOT / "src" / "main.rs").read_text(encoding="utf-8")
-    if 'name = "vertexy"' not in cargo:
-        errors.append("Cargo package/binary is not named vertexy")
-    if 'name = "vertexy"' not in main:
-        errors.append("Clap application is not named vertexy")
+    if 'name = "vertox"' not in cargo:
+        errors.append("Cargo package/binary is not named vertox")
+    if 'name = "vertox"' not in main:
+        errors.append("Clap application is not named vertox")
 
 
 def main() -> int:
@@ -68,7 +68,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
 
-    print("Vertexy repository checks passed.")
+    print("VERTOX repository checks passed.")
     return 0
 
 

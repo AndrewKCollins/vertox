@@ -34,7 +34,7 @@ fn report_anchor_discriminator(data: &[u8]) -> &[u8] {
     if data.len() >= 8 {
         let disc = &data[..8];
         eprintln!(
-            "[vertexy] First 8 bytes (possible Anchor discriminator): {}",
+            "[vertox] First 8 bytes (possible Anchor discriminator): {}",
             hex::encode(disc)
         );
         return disc;
@@ -165,7 +165,7 @@ pub async fn fetch_to<P: AsRef<Path>>(out_dir: P, rpc_url: Option<String>, accou
     let output_path = out_dir.as_ref().join(filename);
     fs::write(&output_path, fetched.data)
         .with_context(|| format!("failed to write {}", output_path.display()))?;
-    eprintln!("[vertexy] wrote {}", output_path.display());
+    eprintln!("[vertox] wrote {}", output_path.display());
     Ok(())
 }
 

@@ -1,5 +1,5 @@
 [package]
-name = "vertexy"
+name = "vertox"
 version = "0.1.0"
 edition = "2021"
 description = "Solana program security analysis and sBPF reverse-engineering toolkit"
@@ -10,7 +10,7 @@ categories = ["command-line-utilities", "development-tools"]
 publish = false
 
 [[bin]]
-name = "vertexy"
+name = "vertox"
 path = "src/main.rs"
 
 [dependencies]

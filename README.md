@@ -26,13 +26,13 @@ VERTOX is a command-line toolkit for Solana developers, auditors, and researcher
 
 | Capability | What it gives you |
 | --- | --- |
-| `VERTOX scan` | AST-based security checks using bundled or custom Starlark rules |
-| `VERTOX recap` | Audit-friendly Anchor instruction and account-constraint summaries |
-| `VERTOX fetch` | Program bytecode or raw account data from a Solana RPC endpoint |
-| `VERTOX reverse` | sBPF disassembly, immediate-value tracking, and control-flow graphs |
-| `VERTOX dotting` | Manual enrichment of reduced Graphviz control-flow graphs |
-| `VERTOX ast` | JSON AST output for writing and debugging custom rules |
-| `VERTOX build` | Build helpers for Anchor and native SBF projects |
+| `vertox scan` | AST-based security checks using bundled or custom Starlark rules |
+| `vertox recap` | Audit-friendly Anchor instruction and account-constraint summaries |
+| `vertox fetch` | Program bytecode or raw account data from a Solana RPC endpoint |
+| `vertox reverse` | sBPF disassembly, immediate-value tracking, and control-flow graphs |
+| `vertox dotting` | Manual enrichment of reduced Graphviz control-flow graphs |
+| `vertox ast` | JSON AST output for writing and debugging custom rules |
+| `vertox build` | Build helpers for Anchor and native SBF projects |
 
 VERTOX is intended to support security review. It does not prove that a program is secure, and findings still require human validation.
 
@@ -47,18 +47,19 @@ The core CLI requires Rust and Cargo. Some commands have extra requirements:
 
 ### From source
 
-Clone this repository, then install the binary from its root:
+Clone the repository, then install the binary from its root:
 
 ```bash
-cd VERTOX
+git clone https://github.com/AndrewKCollins/vertox.git
+cd vertox
 cargo install --path .
 ```
 
 Then verify the installation:
 
 ```bash
-VERTOX --help
-VERTOX --version
+vertox --help
+vertox --version
 ```
 
 For local development without installing:
@@ -74,13 +75,13 @@ cargo run -- --help
 Use VERTOX's bundled rules:
 
 ```bash
-VERTOX scan --target-dir ./my-solana-project
+vertox scan --target-dir ./my-solana-project
 ```
 
 Add your own Starlark rules:
 
 ```bash
-VERTOX scan \
+vertox scan \
   --target-dir ./my-solana-project \
   --rules-dir ./rules
 ```
@@ -88,7 +89,7 @@ VERTOX scan \
 Use only external rules:
 
 ```bash
-VERTOX scan \
+vertox scan \
   --target-dir ./my-solana-project \
   --rules-dir ./rules \
   --no-internal-rules
@@ -97,7 +98,7 @@ VERTOX scan \
 ### Review an Anchor project
 
 ```bash
-VERTOX recap --target-dir ./my-anchor-project
+vertox recap --target-dir ./my-anchor-project
 ```
 
 The recap extracts instruction-level audit context including signers, writable accounts, constraints, PDA seeds, and memory allocation hints.
@@ -105,7 +106,7 @@ The recap extracts instruction-level audit context including signers, writable a
 ### Fetch a deployed program or account
 
 ```bash
-VERTOX fetch \
+vertox fetch \
   --program-id <PROGRAM_ID> \
   --out-dir ./out
 ```
@@ -113,7 +114,7 @@ VERTOX fetch \
 Use another RPC endpoint when needed:
 
 ```bash
-VERTOX fetch \
+vertox fetch \
   --program-id <PROGRAM_ID> \
   --out-dir ./out \
   --rpc-url https://your-rpc.example
@@ -124,7 +125,7 @@ For executable accounts, VERTOX writes `fetched_program.so`. Upgradeable program
 ### Reverse engineer an sBPF binary
 
 ```bash
-VERTOX reverse \
+vertox reverse \
   --mode both \
   --bytecodes-file ./program.so \
   --out-dir ./out \
@@ -148,7 +149,7 @@ dot -Tsvg ./out/cfg.dot -o ./out/cfg.svg
 ### Inspect the AST used by rules
 
 ```bash
-VERTOX ast --file-path ./programs/demo/src/lib.rs --starlark-syn-ast
+vertox ast --file-path ./programs/demo/src/lib.rs --starlark-syn-ast
 ```
 
 This is useful when developing custom Starlark detections.
@@ -187,13 +188,13 @@ Start with:
 ## Commands
 
 ```text
-VERTOX build     Build an Anchor or native SBF project
-VERTOX scan      Run source-level security analysis
-VERTOX recap     Summarize an Anchor project's audit surface
-VERTOX fetch     Fetch deployed program or account data
-VERTOX reverse   Disassemble sBPF and generate CFGs
-VERTOX dotting   Reinsert selected functions into a reduced CFG
-VERTOX ast       Print Rust AST data for rule development
+vertox build     Build an Anchor or native SBF project
+vertox scan      Run source-level security analysis
+vertox recap     Summarize an Anchor project's audit surface
+vertox fetch     Fetch deployed program or account data
+vertox reverse   Disassemble sBPF and generate CFGs
+vertox dotting   Reinsert selected functions into a reduced CFG
+vertox ast       Print Rust AST data for rule development
 ```
 
 Legacy command aliases `sast`, `fetcher`, and `ast-utils` remain available for users migrating from the upstream project.

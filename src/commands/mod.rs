@@ -1,4 +1,4 @@
-//! Command dispatchers for the `Vertexy` CLI tool.
+//! Command dispatchers for the `VERTOX` CLI tool.
 //!
 //! This module provides submodules for each top-level command supported by the CLI:
 //!

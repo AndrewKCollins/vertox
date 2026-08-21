@@ -1,6 +1,6 @@
 # Code of conduct
 
-Vertexy contributors are expected to keep technical discussion respectful, specific, and focused on the work.
+VERTOX contributors are expected to keep technical discussion respectful, specific, and focused on the work.
 
 Harassment, threats, discriminatory abuse, deliberate disruption, and publication of another person's private information are not acceptable in project spaces.
 

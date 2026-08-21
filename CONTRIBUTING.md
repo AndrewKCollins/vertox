@@ -1,12 +1,12 @@
-# Contributing to Vertexy
+# Contributing to VERTOX
 
-Thanks for helping improve Vertexy. Contributions are useful when they are focused, testable, and clear about the security assumption being changed.
+Thanks for helping improve VERTOX. Contributions are useful when they are focused, testable, and clear about the security assumption being changed.
 
 ## Before you start
 
 For larger changes, open an issue first and describe the problem, expected behavior, and proposed approach. Small fixes can go directly to a pull request.
 
-Please use `SECURITY.md` instead of a public issue for vulnerabilities in Vertexy itself.
+Please use `SECURITY.md` instead of a public issue for vulnerabilities in VERTOX itself.
 
 ## Development setup
 
@@ -36,7 +36,7 @@ cargo test
 
 Keep changes scoped. If a change modifies CLI behavior, update the README and the relevant page under `docs/src/cli/`.
 
-If Cargo generates or updates `Cargo.lock`, include it in the pull request. Vertexy is an application, so the lockfile should be committed for reproducible builds.
+If Cargo generates or updates `Cargo.lock`, include it in the pull request. VERTOX is an application, so the lockfile should be committed for reproducible builds.
 
 ## Adding a security rule
 

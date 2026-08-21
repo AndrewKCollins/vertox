@@ -481,7 +481,7 @@ mod tests {
     #[test]
     fn test_syn_account_data_matching_star() {
         tracing_subscriber::fmt()
-            .with_env_filter(tracing_subscriber::EnvFilter::new("vertexy=debug"))
+            .with_env_filter(tracing_subscriber::EnvFilter::new("vertox=debug"))
             .pretty()
             .init();
 

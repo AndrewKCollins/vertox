@@ -1,12 +1,12 @@
 # Changelog
 
-All notable changes to Vertexy will be documented here.
+All notable changes to VERTOX will be documented here.
 
 ## [Unreleased]
 
 ### Added
 
-- Vertexy project identity and monochrome logo.
+- VERTOX project identity and monochrome logo.
 - Public repository documentation, contribution guide, security policy, and community templates.
 - CI, dependency-update automation, mdBook deployment, and tagged release builds.
 - Global verbosity flags and clearer CLI help.
@@ -14,7 +14,7 @@ All notable changes to Vertexy will be documented here.
 
 ### Changed
 
-- Renamed the executable from `sol-azy` to `vertexy`.
+- Renamed the executable from `sol-azy` to `vertox`.
 - Command failures now propagate to the process exit status, making the CLI safer to use from shell scripts and CI.
 - Build output uses `-o/--out-dir` consistently.
 
@@ -24,4 +24,4 @@ All notable changes to Vertexy will be documented here.
 
 ### Attribution
 
-Vertexy is based on sol-azy by FuzzingLabs and contributors. See `NOTICE` and `LICENSE`.
+VERTOX is based on sol-azy by FuzzingLabs and contributors. See `NOTICE` and `LICENSE`.
