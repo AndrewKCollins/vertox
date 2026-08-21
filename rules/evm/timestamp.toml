@@ -1,0 +1,7 @@
+id = "solidity-block-timestamp"
+title = "block.timestamp dependency"
+severity = "low"
+languages = ["solidity"]
+pattern = '\bblock\.timestamp\b'
+message = "Timestamp-dependent logic can be sensitive to block-production timing."
+recommendation = "Avoid using timestamps for strong randomness or assumptions that require exact timing."

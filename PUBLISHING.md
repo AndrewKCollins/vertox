@@ -1,45 +1,24 @@
-# Publishing VERTOX on GitHub
+# Publishing VERTOX
 
-The repository is configured for `https://github.com/AndrewKCollins/vertox`.
+## Before the first Robinhood Chain release
 
-## First public push
+1. Run `cargo fmt --check`.
+2. Run `cargo clippy --all-targets --all-features -- -D warnings`.
+3. Run `cargo test --all-targets`.
+4. Run `python3 scripts/check_repo.py`.
+5. Test `vertox network` and one testnet `vertox inspect` call.
+6. Confirm README and docs match the current Robinhood Chain network configuration.
+7. Commit `Cargo.lock` after the first successful dependency resolution.
 
-1. Use the GitHub repository `https://github.com/AndrewKCollins/vertox` with `main` as the default branch.
-2. Push this repository without replacing `LICENSE` or `NOTICE`.
-3. In **Settings → Pages**, choose **GitHub Actions** as the Pages source.
-4. In **Settings → Security**, enable private vulnerability reporting if it is available for the repository.
-5. Add useful repository topics such as `solana`, `security`, `rust`, `sast`, `sbpf`, `reverse-engineering`, and `starlark`.
-6. Add a concise GitHub description, for example: `Solana program security analysis and sBPF reverse-engineering toolkit.`
+## Release
 
-## Before the first release
-
-Run locally:
-
-```bash
-python3 scripts/check_repo.py
-cargo check --all-targets
-cargo test --all-targets
-```
-
-The live Solana RPC tests are ignored by default. Run them explicitly when you want integration coverage:
+Tag releases as `vMAJOR.MINOR.PATCH`, for example:
 
 ```bash
-cargo test -- --ignored
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
-Because VERTOX is a binary application, commit the generated `Cargo.lock` after the first successful Cargo build.
+The release workflow builds platform archives and SHA-256 checksums.
 
-## Create a release
-
-Update `CHANGELOG.md`, commit the version bump, then create and push a tag:
-
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
-
-The release workflow builds binaries and attaches them to the GitHub release created for the tag.
-
-## Attribution
-
-VERTOX is a modified work based on sol-azy by FuzzingLabs and contributors. Keep `LICENSE`, `NOTICE`, and the project-origin section of the README in public distributions.
+The crate currently has `publish = false` because GitHub releases are the primary distribution path.

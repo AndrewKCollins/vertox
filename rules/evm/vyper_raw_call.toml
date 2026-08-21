@@ -1,0 +1,7 @@
+id = "vy-raw-call"
+title = "Vyper raw_call"
+severity = "medium"
+languages = ["vyper"]
+pattern = '\braw_call\s*\('
+message = "raw_call performs a low-level external call and requires careful success and return-data handling."
+recommendation = "Constrain the target and value, verify revert behavior, and validate return data."

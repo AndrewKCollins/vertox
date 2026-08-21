@@ -4,50 +4,59 @@
 
 <h1 align="center">VERTOX</h1>
 
-<h1 align="center"> $VERTOX - CA: 5Vsom8FdhRNAwEe81ebsEA6aQEyc8RA9qHZF8rtbpump </h1>
-
 <p align="center">
-  Solana program security analysis and sBPF reverse-engineering toolkit.
+  Robinhood Chain smart-contract security analysis and EVM reverse-engineering toolkit.
 </p>
 
 <p align="center">
-  <strong>Scan source. Review Anchor constraints. Fetch deployed programs. Reverse sBPF.</strong>
+  <strong>Audit. Reverse. Analyze.</strong>
 </p>
 
 <p align="center">
-  <img alt="Rust 2021" src="https://img.shields.io/badge/Rust-2021-black?logo=rust">
-  <img alt="Solana" src="https://img.shields.io/badge/Solana-sBPF-black">
+  <img alt="Rust" src="https://img.shields.io/badge/Rust-stable-black?logo=rust">
+  <img alt="Robinhood Chain" src="https://img.shields.io/badge/Robinhood%20Chain-EVM-black">
+  <img alt="Chain ID" src="https://img.shields.io/badge/mainnet-4663-black">
   <img alt="License SSPL-1.0" src="https://img.shields.io/badge/license-SSPL--1.0-black">
 </p>
 
-## What VERTOX does
+## What VERTOX is
 
-VERTOX is a command-line toolkit for Solana developers, auditors, and researchers. It combines source-level static analysis with tooling for inspecting compiled and deployed programs.
+VERTOX is an open-source security toolkit built around **Robinhood Chain**, an EVM-compatible Layer 2. It combines Solidity/Vyper source scanning, live JSON-RPC contract inspection, proxy detection, EVM bytecode disassembly, selector recovery, storage inspection, and static control-flow graph generation in one CLI.
 
-| Capability | What it gives you |
+Robinhood Chain uses standard EVM tooling. VERTOX therefore works with contracts built with Foundry, Hardhat, Solidity, and Vyper while defaulting its network-aware commands to Robinhood Chain.
+
+| Command | Purpose |
 | --- | --- |
-| `vertox scan` | AST-based security checks using bundled or custom Starlark rules |
-| `vertox recap` | Audit-friendly Anchor instruction and account-constraint summaries |
-| `vertox fetch` | Program bytecode or raw account data from a Solana RPC endpoint |
-| `vertox reverse` | sBPF disassembly, immediate-value tracking, and control-flow graphs |
-| `vertox dotting` | Manual enrichment of reduced Graphviz control-flow graphs |
-| `vertox ast` | JSON AST output for writing and debugging custom rules |
-| `vertox build` | Build helpers for Anchor and native SBF projects |
+| `vertox scan` | Scan Solidity/Vyper source with bundled or custom rules |
+| `vertox inspect` | Inspect deployed bytecode, proxy slots, selectors, code hash, and contract metadata |
+| `vertox fetch` | Download deployed runtime bytecode from Robinhood Chain |
+| `vertox reverse` | Disassemble EVM bytecode and generate a static CFG |
+| `vertox selectors` | Calculate ABI selectors or discover `PUSH4` selector values |
+| `vertox storage` | Read arbitrary storage or standard EIP-1967 proxy slots |
+| `vertox rpc` | Make a raw JSON-RPC call against Robinhood Chain |
+| `vertox build` | Build Foundry or Hardhat projects |
+| `vertox network` | Print the network configuration VERTOX uses |
 
-VERTOX is intended to support security review. It does not prove that a program is secure, and findings still require human validation.
+VERTOX supports security research and development review. Scanner findings and reverse-engineering output still require human validation.
+
+## Robinhood Chain defaults
+
+VERTOX ships with the official public network configuration:
+
+| | Mainnet | Testnet |
+| --- | --- | --- |
+| Chain ID | `4663` | `46630` |
+| RPC | `https://rpc.mainnet.chain.robinhood.com` | `https://rpc.testnet.chain.robinhood.com` |
+| Gas token | ETH | ETH |
+| Explorer | `https://robinhoodchain.blockscout.com` | `https://explorer.testnet.chain.robinhood.com` |
+
+The public RPC endpoints are useful for development and inspection. For production or high-volume research, use a dedicated provider endpoint and pass it with `--rpc-url`.
+
+Official network documentation: <https://docs.robinhood.com/chain/connecting/>
 
 ## Install
 
-### Requirements
-
-The core CLI requires Rust and Cargo. Some commands have extra requirements:
-
-- `build`: Solana CLI and, for Anchor projects, Anchor CLI
-- Graph visualization: Graphviz is useful for rendering generated `.dot` files
-
 ### From source
-
-Clone the repository, then install the binary from its root:
 
 ```bash
 git clone https://github.com/AndrewKCollins/vertox.git
@@ -55,195 +64,271 @@ cd vertox
 cargo install --path .
 ```
 
-Then verify the installation:
+Verify it:
 
 ```bash
-vertox --help
 vertox --version
-```
-
-For local development without installing:
-
-```bash
-cargo run -- --help
+vertox --help
+vertox network
 ```
 
 ## Quick start
 
-### Scan a Solana project
-
-Use VERTOX's bundled rules:
+### Scan Solidity or Vyper
 
 ```bash
-vertox scan --target-dir ./my-solana-project
+vertox scan ./src
 ```
 
-Add your own Starlark rules:
+Scan a full repository:
 
 ```bash
-vertox scan \
-  --target-dir ./my-solana-project \
-  --rules-dir ./rules
+vertox scan .
 ```
 
-Use only external rules:
+Use additional custom rules:
 
 ```bash
-vertox scan \
-  --target-dir ./my-solana-project \
-  --rules-dir ./rules \
-  --no-internal-rules
+vertox scan ./contracts --rules-dir ./my-rules
 ```
 
-### Review an Anchor project
+Make findings fail CI at high severity or above:
 
 ```bash
-vertox recap --target-dir ./my-anchor-project
+vertox scan ./contracts --fail-on high
 ```
 
-The recap extracts instruction-level audit context including signers, writable accounts, constraints, PDA seeds, and memory allocation hints.
-
-### Fetch a deployed program or account
+Machine-readable output:
 
 ```bash
-vertox fetch \
-  --program-id <PROGRAM_ID> \
-  --out-dir ./out
+vertox scan ./contracts --json
 ```
 
-Use another RPC endpoint when needed:
+### Inspect a deployed Robinhood Chain contract
 
 ```bash
-vertox fetch \
-  --program-id <PROGRAM_ID> \
-  --out-dir ./out \
-  --rpc-url https://your-rpc.example
+vertox inspect 0x1111111111111111111111111111111111111111
 ```
 
-For executable accounts, VERTOX writes `fetched_program.so`. Upgradeable programs are resolved through their ProgramData account and trimmed to the ELF header. Non-executable accounts are written unchanged as `fetched_account.bin`.
+VERTOX checks:
 
-### Reverse engineer an sBPF binary
+- runtime bytecode size and Keccak-256 code hash
+- `PUSH4` selector constants
+- `DELEGATECALL` presence
+- EIP-1967 implementation, admin, and beacon slots
+- EIP-1167 minimal-proxy bytecode
+- balance and transaction count
+- explorer URL and chain identity
+
+Use testnet:
 
 ```bash
-vertox reverse \
-  --mode both \
-  --bytecodes-file ./program.so \
-  --out-dir ./out \
-  --labeling \
-  --reduced
+vertox inspect 0x... --network testnet
 ```
 
-Depending on the selected mode, VERTOX can generate:
-
-- readable disassembly
-- immediate-data information
-- a full or reduced Graphviz CFG
-- labels for known Solana syscalls and discovered functions
-
-Render a generated graph with Graphviz:
+Use your own Robinhood Chain endpoint:
 
 ```bash
-dot -Tsvg ./out/cfg.dot -o ./out/cfg.svg
+vertox inspect 0x... --rpc-url https://your-provider.example
 ```
 
-### Inspect the AST used by rules
+VERTOX validates the RPC chain ID by default. `--no-chain-check` is available for local forks.
+
+### Fetch runtime bytecode
 
 ```bash
-vertox ast --file-path ./programs/demo/src/lib.rs --starlark-syn-ast
+vertox fetch 0x... --out-dir ./out
 ```
 
-This is useful when developing custom Starlark detections.
-
-## Built-in security rules
-
-The bundled rule set currently includes checks for patterns such as:
-
-- missing signer checks
-- missing owner checks
-- arbitrary CPI
-- account reinitialization
-- duplicate mutable accounts
-- PDA sharing
-- type cosplay
-- unvalidated sysvar accounts
-- missing bump seed canonicalization
-- account-data reallocation
-- risky account closing patterns
-- saturating arithmetic usage
-- `unwrap()` on checked arithmetic
-
-Readable rule sources live under [`rules/syn_ast`](rules/syn_ast). The copies embedded into the compiled binary live under [`src/static/starlark_rules`](src/static/starlark_rules).
-
-## Custom Starlark rules
-
-VERTOX's source scanner is designed to be extended without recompiling the CLI. A custom rule can match prepared Rust syntax-tree data and emit a finding with its own metadata and severity.
-
-Start with:
-
-- [`docs/src/rules/format.md`](docs/src/rules/format.md)
-- [`docs/src/rules/templates.md`](docs/src/rules/templates.md)
-- [`docs/src/rules/example.md`](docs/src/rules/example.md)
-- [`rules/syn_ast`](rules/syn_ast)
-
-## Commands
+Output:
 
 ```text
-vertox build     Build an Anchor or native SBF project
-vertox scan      Run source-level security analysis
-vertox recap     Summarize an Anchor project's audit surface
-vertox fetch     Fetch deployed program or account data
-vertox reverse   Disassemble sBPF and generate CFGs
-vertox dotting   Reinsert selected functions into a reduced CFG
-vertox ast       Print Rust AST data for rule development
+out/
+├── contract_deadbeef.bin
+└── contract_deadbeef.hex
 ```
 
-Legacy command aliases `sast`, `fetcher`, and `ast-utils` remain available for users migrating from the upstream project.
-
-Use `-v`, `-vv`, or `-vvv` for additional logs. `RUST_LOG` can still be used for explicit filtering.
-
-## Documentation
-
-The complete mdBook source is in [`docs/`](docs/).
-
-Run it locally with:
+### Reverse EVM bytecode
 
 ```bash
-cargo install mdbook
-mdbook serve docs --open
+vertox reverse ./out/contract_deadbeef.bin --mode both --out-dir ./analysis
 ```
+
+This produces:
+
+```text
+analysis/
+├── disassembly.txt
+├── cfg.dot
+└── cfg.json
+```
+
+Render the DOT graph with Graphviz:
+
+```bash
+dot -Tsvg ./analysis/cfg.dot -o ./analysis/cfg.svg
+```
+
+The CFG resolves direct jump targets when the destination is statically visible as a `PUSHn` immediately before `JUMP` or `JUMPI`. Dynamic jumps are intentionally left unresolved rather than guessed.
+
+### Function selectors
+
+Calculate a selector from its canonical ABI signature:
+
+```bash
+vertox selectors --signature 'transfer(address,uint256)'
+```
+
+Discover `PUSH4` values in local bytecode:
+
+```bash
+vertox selectors --bytecode-file ./out/contract_deadbeef.bin
+```
+
+Or inspect a deployed contract directly:
+
+```bash
+vertox selectors --address 0x...
+```
+
+### Read storage
+
+Read a normal storage slot:
+
+```bash
+vertox storage 0x... --slot 0 --slot 1
+```
+
+With no `--slot` arguments, VERTOX reads the standard EIP-1967 implementation, admin, and beacon positions:
+
+```bash
+vertox storage 0x...
+```
+
+### Raw JSON-RPC
+
+```bash
+vertox rpc eth_blockNumber
+vertox rpc eth_getCode --params '["0x...", "latest"]'
+```
+
+### Build a project
+
+Foundry:
+
+```bash
+vertox build --target-dir ./my-project --tool foundry
+```
+
+Hardhat:
+
+```bash
+vertox build --target-dir ./my-project --tool hardhat
+```
+
+Auto-detection uses `foundry.toml` or a `hardhat.config.*` file:
+
+```bash
+vertox build --target-dir ./my-project
+```
+
+## Built-in source rules
+
+Bundled rules live in [`rules/evm`](rules/evm) and are compiled into the binary. Current coverage includes patterns such as:
+
+- `tx.origin` usage
+- low-level `delegatecall`
+- low-level `.call`
+- `SELFDESTRUCT`
+- inline assembly
+- raw `ecrecover`
+- timestamp dependencies
+- unchecked arithmetic blocks
+- `abi.encodePacked`
+- `CREATE2`
+- Vyper `raw_call`
+
+The scanner is intentionally transparent. Each rule is a small TOML file containing an ID, severity, language, regex, explanation, and recommendation.
+
+### Custom rule example
+
+```toml
+id = "project-dangerous-call"
+title = "Project-specific low-level call"
+severity = "high"
+languages = ["solidity"]
+pattern = '\.call\s*\{'
+message = "Low-level call requires project-specific review."
+recommendation = "Use a typed interface or validate success and returned data."
+```
+
+Run it alongside the built-in rules:
+
+```bash
+vertox scan ./contracts --rules-dir ./rules
+```
+
+## Recommended Robinhood Chain project configuration
+
+### Foundry
+
+```toml
+[rpc_endpoints]
+robinhood = "${RH_RPC_URL}"
+```
+
+```bash
+export RH_RPC_URL=https://rpc.mainnet.chain.robinhood.com
+forge script script/Deploy.s.sol --rpc-url robinhood --broadcast
+```
+
+### Hardhat
+
+```js
+networks: {
+  robinhood: {
+    url: process.env.RH_RPC_URL,
+    chainId: 4663,
+    accounts: [process.env.PRIVATE_KEY]
+  }
+}
+```
+
+See the official deployment guide for current Robinhood Chain examples: <https://docs.robinhood.com/chain/deploy-smart-contracts/>
 
 ## Repository layout
 
 ```text
 .
-├── src/                  Rust CLI and analysis engines
-├── rules/syn_ast/        Human-editable Starlark security rules
-├── docs/                 mdBook documentation
-├── test_cases/           Small Solana and sBPF fixtures
-├── assets/               Project artwork
-└── .github/              CI, release automation, and community templates
+├── src/              VERTOX CLI, RPC client, EVM analysis, scanner
+├── rules/evm/        Bundled Solidity/Vyper rules
+├── docs/             mdBook documentation
+├── test_cases/       Small source and bytecode fixtures
+├── assets/           VERTOX artwork
+└── .github/          CI and release automation
 ```
 
 ## Development
 
 ```bash
-cargo check
-cargo test
 cargo fmt --check
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --all-targets
+python3 scripts/check_repo.py
 ```
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the development workflow and rule-contribution guidance.
 
 ## Security
 
-Please do not publish a potentially exploitable issue in VERTOX itself before maintainers have had a chance to review it. See [`SECURITY.md`](SECURITY.md).
+For vulnerabilities in VERTOX itself, follow [`SECURITY.md`](SECURITY.md). Do not publish an exploitable issue before maintainers have had a reasonable opportunity to review it.
 
 ## Project origin and license
 
-VERTOX is a modified work based on **sol-azy**, originally developed by FuzzingLabs and contributors. The upstream project is available at `https://github.com/FuzzingLabs/sol-azy`.
+VERTOX began as a modified work based on **sol-azy** by FuzzingLabs and contributors. The original project focused on a different VM and ecosystem. VERTOX `0.2.0` replaces those chain-specific analysis paths with Robinhood Chain and EVM tooling while retaining the upstream license and required attribution.
 
-The project remains licensed under the **Server Side Public License v1 (SSPL-1.0)**. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for details about the upstream work and VERTOX modifications.
+VERTOX is distributed under the **Server Side Public License v1 (SSPL-1.0)**. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
 
-## Contributing
+## Links
 
-Bug reports, rule improvements, documentation fixes, and analysis-engine contributions are welcome. Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a pull request.
+- GitHub: <https://github.com/AndrewKCollins/vertox>
+- X: <https://x.com/VertoxGIT>
+- Robinhood Chain docs: <https://docs.robinhood.com/chain/>

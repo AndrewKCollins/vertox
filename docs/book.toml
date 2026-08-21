@@ -1,5 +1,12 @@
 [book]
-authors = ["FuzzingLabs contributors", "VERTOX contributors"]
+title = "VERTOX"
+authors = ["VERTOX contributors"]
 language = "en"
 src = "src"
-title = "VERTOX Documentation"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+additional-css = ["theme/vertox.css"]
+git-repository-url = "https://github.com/AndrewKCollins/vertox"
+site-url = "/vertox/"

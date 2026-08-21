@@ -1,0 +1,7 @@
+id = "vy-raw-log"
+title = "Vyper raw_log"
+severity = "info"
+languages = ["vyper"]
+pattern = '\braw_log\s*\('
+message = "raw_log manually constructs event topics and data."
+recommendation = "Review topic construction and prefer declared events when possible."

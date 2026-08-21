@@ -1,0 +1,9 @@
+:root {
+  --bg: #000;
+  --fg: #f5f5f5;
+}
+html, body, .sidebar, .content, .menu-bar { background: #000 !important; }
+body, .content, .sidebar, .menu-bar, code, pre { color: #eaeaea !important; }
+a, .content a { color: #fff !important; }
+pre, code { border-color: #333 !important; background: #080808 !important; }
+blockquote { border-color: #555 !important; color: #ccc !important; }

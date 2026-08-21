@@ -1,27 +1,26 @@
 # Changelog
 
-All notable changes to VERTOX will be documented here.
+All notable changes to VERTOX are documented here.
 
-## [Unreleased]
+## 0.2.0 - 2026-08-21
 
-### Added
+### Robinhood Chain conversion
 
-- VERTOX project identity and monochrome logo.
-- Public repository documentation, contribution guide, security policy, and community templates.
-- CI, dependency-update automation, mdBook deployment, and tagged release builds.
-- Global verbosity flags and clearer CLI help.
-- Friendly command names: `scan`, `fetch`, and `ast`.
+- Rebuilt VERTOX around Robinhood Chain and standard EVM JSON-RPC.
+- Added mainnet chain ID `4663` and testnet chain ID `46630` defaults.
+- Added Solidity and Vyper source scanning with bundled TOML rules.
+- Added custom rule loading and CI severity thresholds.
+- Added deployed-contract bytecode fetching with `.bin` and `.hex` output.
+- Added contract intelligence with code hashes, selector discovery, `DELEGATECALL` detection, and explorer links.
+- Added EIP-1967 implementation/admin/beacon inspection.
+- Added EIP-1167 minimal-proxy detection.
+- Added EVM disassembly and static control-flow graph generation.
+- Added function selector calculation and `PUSH4` discovery.
+- Added arbitrary storage reads and raw JSON-RPC access.
+- Added Foundry and Hardhat build integration.
+- Replaced the previous chain-specific rules, fixtures, documentation, and architecture.
+- Kept the VERTOX name, monochrome identity, and existing logo artwork unchanged.
 
-### Changed
+## 0.1.0 - 2026-08-20
 
-- Renamed the executable from `sol-azy` to `vertox`.
-- Command failures now propagate to the process exit status, making the CLI safer to use from shell scripts and CI.
-- Build output uses `-o/--out-dir` consistently.
-
-### Compatibility
-
-- Legacy aliases `sast`, `fetcher`, and `ast-utils` remain available.
-
-### Attribution
-
-VERTOX is based on sol-azy by FuzzingLabs and contributors. See `NOTICE` and `LICENSE`.
+- Initial VERTOX public repository based on the upstream sol-azy project.

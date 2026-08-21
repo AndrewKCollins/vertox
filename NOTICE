@@ -1,5 +1,5 @@
 VERTOX
-=======
+======
 
 VERTOX is a modified work based on the sol-azy project originally published by
 FuzzingLabs and contributors:
@@ -12,15 +12,20 @@ VERTOX is distributed under the same license. See LICENSE.
 Prominent modification notice
 -----------------------------
 
-This distribution has been modified from the upstream sol-azy project.
-VERTOX modifications began on 2026-08-20 and include, among other changes:
+This distribution has been substantially modified from the upstream project.
+VERTOX modifications began on 2026-08-20. The Robinhood Chain conversion was
+performed in August 2026 and includes, among other changes:
 
-- rebranding the project and CLI as VERTOX;
-- restructuring public CLI names and help text while retaining migration aliases;
-- propagating command failures as non-zero process exits for automation use;
-- adding public repository documentation and community files;
-- adding CI, documentation, dependency-update, and release automation;
-- adding project artwork and refreshed usage documentation.
+- retaining the VERTOX name, CLI identity, and project artwork;
+- replacing Solana/Anchor project analysis with Solidity and Vyper scanning;
+- replacing sBPF disassembly with EVM bytecode disassembly and CFG generation;
+- replacing Solana account/program RPC logic with Ethereum JSON-RPC methods;
+- adding Robinhood Chain mainnet/testnet defaults and chain-ID validation;
+- adding deployed-contract intelligence, EIP-1967 proxy-slot inspection,
+  EIP-1167 minimal-proxy detection, selector recovery, storage inspection,
+  and raw JSON-RPC access;
+- adding Foundry and Hardhat build integration;
+- replacing chain-specific test fixtures, rules, documentation, and automation.
 
-Original authorship notices and rule-author metadata are retained where they
-appear in the source. This notice does not imply endorsement by FuzzingLabs.
+Original authorship and license notices are retained where required. This notice
+does not imply endorsement by FuzzingLabs or Robinhood.

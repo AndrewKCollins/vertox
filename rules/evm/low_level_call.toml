@@ -1,0 +1,7 @@
+id = "solidity-low-level-call"
+title = "Low-level external call"
+severity = "medium"
+languages = ["solidity"]
+pattern = '\.call\s*(\{|\()'
+message = "Low-level calls bypass Solidity interface and return-value safety checks."
+recommendation = "Check success and returned data, apply checks-effects-interactions, and prefer typed interfaces when possible."

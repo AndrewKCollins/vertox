@@ -1,0 +1,7 @@
+id = "solidity-raw-ecrecover"
+title = "Raw ecrecover usage"
+severity = "medium"
+languages = ["solidity"]
+pattern = '\becrecover\s*\('
+message = "Raw ecrecover code often misses signature malleability, domain separation, or zero-address checks."
+recommendation = "Prefer a well-reviewed ECDSA library and use EIP-712 domain separation where appropriate."

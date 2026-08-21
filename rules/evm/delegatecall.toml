@@ -1,0 +1,7 @@
+id = "solidity-delegatecall"
+title = "Low-level delegatecall"
+severity = "high"
+languages = ["solidity"]
+pattern = '\.delegatecall\s*\('
+message = "delegatecall executes foreign code in the caller storage context and expands the trust boundary."
+recommendation = "Restrict targets, validate upgrade paths, and document storage-layout assumptions."

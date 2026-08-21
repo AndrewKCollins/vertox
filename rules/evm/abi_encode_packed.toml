@@ -1,0 +1,7 @@
+id = "solidity-encode-packed"
+title = "abi.encodePacked usage"
+severity = "low"
+languages = ["solidity"]
+pattern = '\babi\.encodePacked\s*\('
+message = "Packed encoding can create ambiguous byte sequences when multiple dynamic values are combined."
+recommendation = "Use abi.encode for structured hashing unless packed encoding is required and inputs are unambiguous."

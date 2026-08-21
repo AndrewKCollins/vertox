@@ -1,0 +1,7 @@
+id = "solidity-create2"
+title = "CREATE2 deployment"
+severity = "info"
+languages = ["solidity"]
+pattern = '\bcreate2\b'
+message = "CREATE2 makes addresses dependent on deployer, salt, and init-code hash and deserves deployment-path review."
+recommendation = "Validate salts, init code, ownership, and address-collision assumptions."

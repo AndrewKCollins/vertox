@@ -1,0 +1,7 @@
+id = "solidity-unchecked-block"
+title = "Unchecked arithmetic block"
+severity = "low"
+languages = ["solidity"]
+pattern = '\bunchecked\s*\{'
+message = "Arithmetic inside unchecked blocks does not revert on overflow or underflow."
+recommendation = "Confirm wraparound is intentional and bounded by surrounding invariants."

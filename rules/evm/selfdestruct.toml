@@ -1,0 +1,7 @@
+id = "solidity-selfdestruct"
+title = "SELFDESTRUCT path"
+severity = "high"
+languages = ["solidity"]
+pattern = '\b(selfdestruct|suicide)\s*\('
+message = "SELFDESTRUCT behavior has changed across EVM upgrades and can create dangerous lifecycle assumptions."
+recommendation = "Avoid SELFDESTRUCT for upgrade or shutdown logic. Prefer explicit state transitions."

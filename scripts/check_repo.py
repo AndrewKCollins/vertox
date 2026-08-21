@@ -1,76 +1,70 @@
 #!/usr/bin/env python3
-"""Lightweight repository consistency checks for VERTOX."""
-
-from __future__ import annotations
-
+from pathlib import Path
 import re
 import sys
-from pathlib import Path
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
+errors = []
 
+required = [
+    ROOT / "Cargo.toml",
+    ROOT / "README.md",
+    ROOT / "LICENSE",
+    ROOT / "NOTICE",
+    ROOT / "assets" / "logo1.png",
+    ROOT / "rules" / "evm",
+]
+for path in required:
+    if not path.exists():
+        errors.append(f"missing required path: {path.relative_to(ROOT)}")
 
-def check_rule_mirrors(errors: list[str]) -> None:
-    public = ROOT / "rules" / "syn_ast"
-    embedded = ROOT / "src" / "static" / "starlark_rules" / "syn_ast"
+cargo = tomllib.loads((ROOT / "Cargo.toml").read_text())
+if cargo["package"]["name"] != "vertox":
+    errors.append("Cargo package must be named vertox")
+if "Robinhood Chain" not in cargo["package"]["description"]:
+    errors.append("Cargo description should identify Robinhood Chain")
 
-    public_files = {p.name: p for p in public.glob("*.star")}
-    embedded_files = {p.name: p for p in embedded.glob("*.star")}
+network = (ROOT / "src" / "network.rs").read_text()
+for expected in ["4663", "46630", "rpc.mainnet.chain.robinhood.com", "rpc.testnet.chain.robinhood.com"]:
+    if expected not in network:
+        errors.append(f"network.rs missing {expected}")
 
-    if public_files.keys() != embedded_files.keys():
-        missing_embedded = sorted(public_files.keys() - embedded_files.keys())
-        missing_public = sorted(embedded_files.keys() - public_files.keys())
-        if missing_embedded:
-            errors.append(f"rules missing from embedded copy: {', '.join(missing_embedded)}")
-        if missing_public:
-            errors.append(f"embedded rules missing from public copy: {', '.join(missing_public)}")
+for rule_path in sorted((ROOT / "rules" / "evm").glob("*.toml")):
+    try:
+        rule = tomllib.loads(rule_path.read_text())
+    except Exception as exc:
+        errors.append(f"invalid TOML {rule_path.relative_to(ROOT)}: {exc}")
+        continue
+    for key in ["id", "title", "severity", "languages", "pattern", "message", "recommendation"]:
+        if key not in rule:
+            errors.append(f"{rule_path.relative_to(ROOT)} missing {key}")
+    try:
+        re.compile(rule.get("pattern", ""))
+    except re.error as exc:
+        errors.append(f"invalid regex {rule_path.relative_to(ROOT)}: {exc}")
 
-    for name in sorted(public_files.keys() & embedded_files.keys()):
-        if public_files[name].read_bytes() != embedded_files[name].read_bytes():
-            errors.append(f"rule copies differ: {name}")
+# Stale runtime/product wording should not survive the chain conversion.
+# Legal attribution in NOTICE/README is intentionally excluded.
+scan_paths = [ROOT / "src", ROOT / "docs", ROOT / "rules", ROOT / "test_cases"]
+stale = [
+    (re.compile(r"\bAnchor\b", re.I), "Anchor"),
+    (re.compile(r"\bsBPF\b", re.I), "sBPF"),
+    (re.compile(r"solana-program", re.I), "solana-program"),
+]
+for base in scan_paths:
+    for path in base.rglob("*"):
+        if not path.is_file() or path.suffix.lower() in {".png", ".jpg", ".jpeg", ".gif", ".ico", ".svg"}:
+            continue
+        text = path.read_text(errors="ignore")
+        for pattern, label in stale:
+            if pattern.search(text):
+                errors.append(f"stale {label} reference: {path.relative_to(ROOT)}")
 
+if errors:
+    print("Repository checks failed:")
+    for error in errors:
+        print(f" - {error}")
+    sys.exit(1)
 
-def check_markdown_links(errors: list[str]) -> None:
-    markdown_files = [ROOT / "README.md", *sorted((ROOT / "docs" / "src").rglob("*.md"))]
-    link_pattern = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
-    scheme_pattern = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
-
-    for path in markdown_files:
-        text = path.read_text(encoding="utf-8")
-        for match in link_pattern.finditer(text):
-            raw_target = match.group(1).strip()
-            target = raw_target.split("#", 1)[0].strip()
-            if not target or scheme_pattern.match(target):
-                continue
-            target = target.split()[0]
-            resolved = (path.parent / target).resolve()
-            if not resolved.exists():
-                errors.append(f"broken relative Markdown link in {path.relative_to(ROOT)}: {raw_target}")
-
-
-def check_branding(errors: list[str]) -> None:
-    cargo = (ROOT / "Cargo.toml").read_text(encoding="utf-8")
-    main = (ROOT / "src" / "main.rs").read_text(encoding="utf-8")
-    if 'name = "vertox"' not in cargo:
-        errors.append("Cargo package/binary is not named vertox")
-    if 'name = "vertox"' not in main:
-        errors.append("Clap application is not named vertox")
-
-
-def main() -> int:
-    errors: list[str] = []
-    check_rule_mirrors(errors)
-    check_markdown_links(errors)
-    check_branding(errors)
-
-    if errors:
-        for error in errors:
-            print(f"ERROR: {error}", file=sys.stderr)
-        return 1
-
-    print("VERTOX repository checks passed.")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+print("VERTOX repository checks passed.")

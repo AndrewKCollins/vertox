@@ -1,65 +1,38 @@
 # Contributing to VERTOX
 
-Thanks for helping improve VERTOX. Contributions are useful when they are focused, testable, and clear about the security assumption being changed.
-
-## Before you start
-
-For larger changes, open an issue first and describe the problem, expected behavior, and proposed approach. Small fixes can go directly to a pull request.
-
-Please use `SECURITY.md` instead of a public issue for vulnerabilities in VERTOX itself.
+VERTOX welcomes focused contributions to Robinhood Chain and EVM security analysis.
 
 ## Development setup
 
-Install Rust using rustup, then clone the repository and run:
-
-```bash
-cargo check
-cargo test
-```
-
-For changes to the documentation:
-
-```bash
-cargo install mdbook
-mdbook serve docs
-```
-
-## Pull requests
-
-Before opening a pull request:
+Install stable Rust, then run:
 
 ```bash
 cargo fmt --check
-cargo check
-cargo test
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --all-targets
+python3 scripts/check_repo.py
 ```
 
-Keep changes scoped. If a change modifies CLI behavior, update the README and the relevant page under `docs/src/cli/`.
+Network-dependent commands should not be required for unit tests. Keep tests deterministic and use local fixtures where possible.
 
-If Cargo generates or updates `Cargo.lock`, include it in the pull request. VERTOX is an application, so the lockfile should be committed for reproducible builds.
+## Source rules
 
-## Adding a security rule
+Bundled rules live under `rules/evm/`. A rule should identify a security-sensitive pattern that benefits from human review. Avoid presenting regex matches as proof of exploitation.
 
-Source-analysis rules are Starlark files under `rules/syn_ast/`. Bundled runtime copies are embedded from `src/static/starlark_rules/syn_ast/`.
+Each rule must include:
 
-A rule contribution should include:
+```toml
+id = "unique-id"
+title = "Short title"
+severity = "medium"
+languages = ["solidity"]
+pattern = 'regex'
+message = "Why the match matters."
+recommendation = "What should be reviewed or changed."
+```
 
-1. a narrow description of the unsafe pattern;
-2. metadata that explains the finding clearly;
-3. at least one positive example that should trigger;
-4. at least one negative example that should not trigger;
-5. documentation when the rule introduces a new matching pattern or helper.
+Supported languages are `solidity` and `vyper`.
 
-Avoid broad patterns that produce large numbers of findings without actionable context.
+## Pull requests
 
-## Reverse-engineering changes
-
-Changes to disassembly, syscall labeling, immediate tracking, or CFG generation should be exercised against fixtures under `test_cases/`. If output changes intentionally, include a short before-and-after example in the pull request.
-
-## Style
-
-Prefer straightforward Rust, explicit errors, and small functions. Do not silently discard errors that should affect the CLI exit status.
-
-## License
-
-By contributing, you agree that your contribution will be distributed under the repository's SSPL-1.0 license.
+Keep changes scoped. Explain the security or developer problem being solved, add tests for analysis logic, update docs when CLI behavior changes, and do not include private keys, API keys, production secrets, or live exploit material.

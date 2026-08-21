@@ -1,0 +1,7 @@
+id = "solidity-tx-origin-auth"
+title = "tx.origin used in contract logic"
+severity = "high"
+languages = ["solidity"]
+pattern = 'tx\.origin'
+message = "tx.origin is fragile for authorization and can be abused through intermediary contracts."
+recommendation = "Use msg.sender with explicit role or ownership checks for authorization."

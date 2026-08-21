@@ -1,0 +1,7 @@
+id = "solidity-inline-assembly"
+title = "Inline assembly"
+severity = "medium"
+languages = ["solidity"]
+pattern = '\bassembly\s*\{'
+message = "Inline assembly bypasses several Solidity safety guarantees and deserves manual review."
+recommendation = "Keep assembly minimal, document invariants, and review memory, storage, and call semantics carefully."

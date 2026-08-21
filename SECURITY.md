@@ -1,20 +1,13 @@
-# Security policy
+# Security Policy
 
 ## Reporting a vulnerability
 
-If you discover a vulnerability in VERTOX itself, especially one that could lead to arbitrary command execution, unsafe handling of untrusted input, credential exposure, or misleading security results, please avoid opening a public issue with exploit details.
+Do not open a public issue for a vulnerability that could be used to compromise VERTOX users, release infrastructure, or systems that consume VERTOX output.
 
-Use GitHub's private vulnerability reporting feature for this repository if it is enabled. If private reporting is not enabled, contact the repository maintainer through a private channel listed on the GitHub profile and include only enough public information to establish contact.
-
-A useful report includes:
-
-- affected VERTOX version or commit;
-- operating system and relevant tool versions;
-- minimal reproduction steps;
-- expected and observed behavior;
-- security impact;
-- suggested fix, if you have one.
+Use GitHub private vulnerability reporting when it is enabled for the repository. Include the affected version, reproduction conditions, realistic impact, and the smallest proof needed to verify the issue.
 
 ## Scope
 
-Security reports about third-party Solana programs discovered with VERTOX should be reported to those projects through their own disclosure processes. VERTOX's findings are analysis signals and may contain false positives or false negatives.
+Security reports about VERTOX itself are in scope. Findings about third-party contracts discovered with VERTOX should be reported to the relevant project through its own disclosure process.
+
+VERTOX analysis is not a security guarantee. Static patterns, proxy detection, disassembly, and CFG output all require human review.
