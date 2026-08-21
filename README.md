@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="assets/logo.png" width="220" alt="Vertexy logo">
+  <img src="assets/logo.png" width="220" alt="VERTOX logo">
 </p>
 
-<h1 align="center">Vertexy</h1>
+<h1 align="center">VERTOX</h1>
 
-<h1 align="center"> $VERTEXY - CA: TBA </h1>
+<h1 align="center"> $VERTOX - CA: TBA </h1>
 
 <p align="center">
   Solana program security analysis and sBPF reverse-engineering toolkit.
@@ -20,21 +20,21 @@
   <img alt="License SSPL-1.0" src="https://img.shields.io/badge/license-SSPL--1.0-black">
 </p>
 
-## What Vertexy does
+## What VERTOX does
 
-Vertexy is a command-line toolkit for Solana developers, auditors, and researchers. It combines source-level static analysis with tooling for inspecting compiled and deployed programs.
+VERTOX is a command-line toolkit for Solana developers, auditors, and researchers. It combines source-level static analysis with tooling for inspecting compiled and deployed programs.
 
 | Capability | What it gives you |
 | --- | --- |
-| `vertexy scan` | AST-based security checks using bundled or custom Starlark rules |
-| `vertexy recap` | Audit-friendly Anchor instruction and account-constraint summaries |
-| `vertexy fetch` | Program bytecode or raw account data from a Solana RPC endpoint |
-| `vertexy reverse` | sBPF disassembly, immediate-value tracking, and control-flow graphs |
-| `vertexy dotting` | Manual enrichment of reduced Graphviz control-flow graphs |
-| `vertexy ast` | JSON AST output for writing and debugging custom rules |
-| `vertexy build` | Build helpers for Anchor and native SBF projects |
+| `VERTOX scan` | AST-based security checks using bundled or custom Starlark rules |
+| `VERTOX recap` | Audit-friendly Anchor instruction and account-constraint summaries |
+| `VERTOX fetch` | Program bytecode or raw account data from a Solana RPC endpoint |
+| `VERTOX reverse` | sBPF disassembly, immediate-value tracking, and control-flow graphs |
+| `VERTOX dotting` | Manual enrichment of reduced Graphviz control-flow graphs |
+| `VERTOX ast` | JSON AST output for writing and debugging custom rules |
+| `VERTOX build` | Build helpers for Anchor and native SBF projects |
 
-Vertexy is intended to support security review. It does not prove that a program is secure, and findings still require human validation.
+VERTOX is intended to support security review. It does not prove that a program is secure, and findings still require human validation.
 
 ## Install
 
@@ -50,15 +50,15 @@ The core CLI requires Rust and Cargo. Some commands have extra requirements:
 Clone this repository, then install the binary from its root:
 
 ```bash
-cd vertexy
+cd VERTOX
 cargo install --path .
 ```
 
 Then verify the installation:
 
 ```bash
-vertexy --help
-vertexy --version
+VERTOX --help
+VERTOX --version
 ```
 
 For local development without installing:
@@ -71,16 +71,16 @@ cargo run -- --help
 
 ### Scan a Solana project
 
-Use Vertexy's bundled rules:
+Use VERTOX's bundled rules:
 
 ```bash
-vertexy scan --target-dir ./my-solana-project
+VERTOX scan --target-dir ./my-solana-project
 ```
 
 Add your own Starlark rules:
 
 ```bash
-vertexy scan \
+VERTOX scan \
   --target-dir ./my-solana-project \
   --rules-dir ./rules
 ```
@@ -88,7 +88,7 @@ vertexy scan \
 Use only external rules:
 
 ```bash
-vertexy scan \
+VERTOX scan \
   --target-dir ./my-solana-project \
   --rules-dir ./rules \
   --no-internal-rules
@@ -97,7 +97,7 @@ vertexy scan \
 ### Review an Anchor project
 
 ```bash
-vertexy recap --target-dir ./my-anchor-project
+VERTOX recap --target-dir ./my-anchor-project
 ```
 
 The recap extracts instruction-level audit context including signers, writable accounts, constraints, PDA seeds, and memory allocation hints.
@@ -105,7 +105,7 @@ The recap extracts instruction-level audit context including signers, writable a
 ### Fetch a deployed program or account
 
 ```bash
-vertexy fetch \
+VERTOX fetch \
   --program-id <PROGRAM_ID> \
   --out-dir ./out
 ```
@@ -113,18 +113,18 @@ vertexy fetch \
 Use another RPC endpoint when needed:
 
 ```bash
-vertexy fetch \
+VERTOX fetch \
   --program-id <PROGRAM_ID> \
   --out-dir ./out \
   --rpc-url https://your-rpc.example
 ```
 
-For executable accounts, Vertexy writes `fetched_program.so`. Upgradeable programs are resolved through their ProgramData account and trimmed to the ELF header. Non-executable accounts are written unchanged as `fetched_account.bin`.
+For executable accounts, VERTOX writes `fetched_program.so`. Upgradeable programs are resolved through their ProgramData account and trimmed to the ELF header. Non-executable accounts are written unchanged as `fetched_account.bin`.
 
 ### Reverse engineer an sBPF binary
 
 ```bash
-vertexy reverse \
+VERTOX reverse \
   --mode both \
   --bytecodes-file ./program.so \
   --out-dir ./out \
@@ -132,7 +132,7 @@ vertexy reverse \
   --reduced
 ```
 
-Depending on the selected mode, Vertexy can generate:
+Depending on the selected mode, VERTOX can generate:
 
 - readable disassembly
 - immediate-data information
@@ -148,7 +148,7 @@ dot -Tsvg ./out/cfg.dot -o ./out/cfg.svg
 ### Inspect the AST used by rules
 
 ```bash
-vertexy ast --file-path ./programs/demo/src/lib.rs --starlark-syn-ast
+VERTOX ast --file-path ./programs/demo/src/lib.rs --starlark-syn-ast
 ```
 
 This is useful when developing custom Starlark detections.
@@ -175,7 +175,7 @@ Readable rule sources live under [`rules/syn_ast`](rules/syn_ast). The copies em
 
 ## Custom Starlark rules
 
-Vertexy's source scanner is designed to be extended without recompiling the CLI. A custom rule can match prepared Rust syntax-tree data and emit a finding with its own metadata and severity.
+VERTOX's source scanner is designed to be extended without recompiling the CLI. A custom rule can match prepared Rust syntax-tree data and emit a finding with its own metadata and severity.
 
 Start with:
 
@@ -187,13 +187,13 @@ Start with:
 ## Commands
 
 ```text
-vertexy build     Build an Anchor or native SBF project
-vertexy scan      Run source-level security analysis
-vertexy recap     Summarize an Anchor project's audit surface
-vertexy fetch     Fetch deployed program or account data
-vertexy reverse   Disassemble sBPF and generate CFGs
-vertexy dotting   Reinsert selected functions into a reduced CFG
-vertexy ast       Print Rust AST data for rule development
+VERTOX build     Build an Anchor or native SBF project
+VERTOX scan      Run source-level security analysis
+VERTOX recap     Summarize an Anchor project's audit surface
+VERTOX fetch     Fetch deployed program or account data
+VERTOX reverse   Disassemble sBPF and generate CFGs
+VERTOX dotting   Reinsert selected functions into a reduced CFG
+VERTOX ast       Print Rust AST data for rule development
 ```
 
 Legacy command aliases `sast`, `fetcher`, and `ast-utils` remain available for users migrating from the upstream project.
@@ -235,13 +235,13 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the development workflow and rule-c
 
 ## Security
 
-Please do not publish a potentially exploitable issue in Vertexy itself before maintainers have had a chance to review it. See [`SECURITY.md`](SECURITY.md).
+Please do not publish a potentially exploitable issue in VERTOX itself before maintainers have had a chance to review it. See [`SECURITY.md`](SECURITY.md).
 
 ## Project origin and license
 
-Vertexy is a modified work based on **sol-azy**, originally developed by FuzzingLabs and contributors. The upstream project is available at `https://github.com/FuzzingLabs/sol-azy`.
+VERTOX is a modified work based on **sol-azy**, originally developed by FuzzingLabs and contributors. The upstream project is available at `https://github.com/FuzzingLabs/sol-azy`.
 
-The project remains licensed under the **Server Side Public License v1 (SSPL-1.0)**. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for details about the upstream work and Vertexy modifications.
+The project remains licensed under the **Server Side Public License v1 (SSPL-1.0)**. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for details about the upstream work and VERTOX modifications.
 
 ## Contributing
 
