@@ -1,13 +1,13 @@
 # Architecture
 
-Vertexy is a modular static analysis toolkit designed to work on Solana programs compiled to eBPF.  
+VERTOX is a modular static analysis toolkit designed to work on Solana programs compiled to eBPF.  
 It is capable of disassembling, analyzing control flow, decoding embedded `.rodata` strings, and performing pattern-based syntactic analysis through rule-based AST matching.
 
 ---
 
 ## High-Level Design
 
-Vertexy is structured around **three main engines**, supported by **auxiliary modules**:
+VERTOX is structured around **three main engines**, supported by **auxiliary modules**:
 
 ### Core Engines
 
@@ -33,7 +33,7 @@ Vertexy is structured around **three main engines**, supported by **auxiliary mo
   Retrieves deployed program bytecode directly from on-chain Solana accounts via RPC.
   → Enables reverse analysis even without access to local source code.
 
-Each component is designed to be **composable and scriptable**, making Vertexy flexible for both auditing and program analysis workflows.
+Each component is designed to be **composable and scriptable**, making VERTOX flexible for both auditing and program analysis workflows.
 
 ---
 

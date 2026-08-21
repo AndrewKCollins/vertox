@@ -1,13 +1,13 @@
 # Disassembly
 
-Vertexy statically disassembles compiled Solana sBPF programs into a readable, instruction-by-instruction view.  
+VERTOX statically disassembles compiled Solana sBPF programs into a readable, instruction-by-instruction view.  
 This view is enhanced with **immediate data decoding**, especially for strings loaded from `.rodata`.
 
 ---
 
 ## Overview
 
-The disassembly engine in Vertexy builds upon `anza-xyz/sbpf`'s instruction decoder.  
+The disassembly engine in VERTOX builds upon `anza-xyz/sbpf`'s instruction decoder.  
 It adds layers of audit-focused context by:
 
 - Labeling basic blocks (e.g., `lbb_42`)
@@ -20,7 +20,7 @@ It adds layers of audit-focused context by:
 
 ## Example
 
-Here’s a disassembly snippet produced by Vertexy:
+Here’s a disassembly snippet produced by VERTOX:
 
 ```
 entrypoint:
@@ -87,7 +87,7 @@ lbb_58:
 
 ## Syscall resolution logic
 
-Step 1: Vertexy registers syscall names from `SYSCALL_NAMES` with `register_solana_syscalls()`, which calls `loader.register_function(name, SyscallStub::vm)`.
+Step 1: VERTOX registers syscall names from `SYSCALL_NAMES` with `register_solana_syscalls()`, which calls `loader.register_function(name, SyscallStub::vm)`.
 
 Step 2: in Anza SBPF, `BuiltinProgram::register_function` hashes exactly `name.as_bytes()` with `ebpf::hash_symbol_name`, then stores `(hash -> name, function)` in the loader `FunctionRegistry`.
 
@@ -95,7 +95,7 @@ Step 3: during `Executable::from_elf`, each unresolved `R_Bpf_64_32` call reloca
 
 Step 4: during disassembly/execution, `CALL_IMM` is treated as syscall when `!static_syscalls || insn.src == 0`, and the immediate value (`insn.imm as u32`) is used as the lookup key in `loader.get_function_registry().lookup_by_key(...)`.
 
-Step 5: if lookup succeeds, output is `syscall <name>` and Vertexy appends the readable signature from `SYSCALL_SIGNATURES`; if lookup fails, output falls back to the raw immediate value.
+Step 5: if lookup succeeds, output is `syscall <name>` and VERTOX appends the readable signature from `SYSCALL_SIGNATURES`; if lookup fails, output falls back to the raw immediate value.
 
 Example:
 
@@ -118,7 +118,7 @@ Instructions like:
 lddw   r1, 0x1000043e0
 ```
 
-point into `.rodata`. Vertexy:
+point into `.rodata`. VERTOX:
 
 1. Checks if `imm >= MM_RODATA_START`
 2. Extracts the corresponding bytes from the `.so`
@@ -139,7 +139,7 @@ pub fn update_string_resolution(program: &[u8], insn: &Insn, next_insn_wrapped: 
 > hor64  r1, 0x10000000     ; set upper 32 bits → r1 = 0x1000000000003000
 > ```
 >
-> Vertexy handles this by:
+> VERTOX handles this by:
 >
 > 1. **Tracking register values** using a `RegisterTracker`
 > 2. **Do an "emulation"** of `mov` and `hor64`
@@ -167,7 +167,7 @@ Here is an example of a control flow graph with disassembly and immediate data d
 When running:
 
 ```bash
-vertexy reverse --mode disass --out-dir ./out --bytecodes-file ./program.so
+vertox reverse --mode disass --out-dir ./out --bytecodes-file ./program.so
 ```
 
 You get:

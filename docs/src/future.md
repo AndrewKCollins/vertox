@@ -1,6 +1,6 @@
-# Evolution of Vertexy
+# Evolution of VERTOX
 
-**Vertexy** is currently in development, and we have few ideas for new features.
+**VERTOX** is currently in development, and we have few ideas for new features.
 
 ## Static analysis
 

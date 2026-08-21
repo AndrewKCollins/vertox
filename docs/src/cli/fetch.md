@@ -7,7 +7,7 @@ This is useful for performing offline analysis, reverse engineering, or static c
 ## Usage
 
 ```bash
-vertexy fetch \
+vertox fetch \
   --program-id <PROGRAM_ID> \
   --out-dir <OUTPUT_DIR> \
   [--rpc-url <CUSTOM_RPC_ENDPOINT>]
@@ -28,7 +28,7 @@ vertexy fetch \
 ## Example
 
 ```bash
-vertexy fetch \
+vertox fetch \
   --program-id srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX \
   --out-dir ./out
 ```
@@ -69,7 +69,7 @@ Those 8 bytes uniquely identify the struct on-chain. `fetch` already prints them
 In a **future** version we’ll **reverse-map** the discriminator to the struct name whenever the hash matches a known Anchor IDL, giving you an instant hint such as:
 
 ```
-[vertexy] First 8 bytes (possible Anchor discriminator): 0xd8926b... -> looks like "State" struct name
+[vertox] First 8 bytes (possible Anchor discriminator): 0xd8926b... -> looks like "State" struct name
 ```
 
 This automatic recognition will only be possible for accounts that follow the Anchor convention; plain Borsh-only projects will continue to appear as raw bytes.

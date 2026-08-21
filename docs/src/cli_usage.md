@@ -1,8 +1,8 @@
 # CLI usage
 
-Vertexy groups its functionality into focused subcommands. Run `vertexy <command> --help` for the complete option list.
+VERTOX groups its functionality into focused subcommands. Run `vertox <command> --help` for the complete option list.
 
-When developing from a clone, replace `vertexy` with `cargo run --` in the examples below.
+When developing from a clone, replace `vertox` with `cargo run --` in the examples below.
 
 ## Commands
 
@@ -11,7 +11,7 @@ When developing from a clone, replace `vertexy` with `cargo run --` in the examp
 Build an Anchor or native SBF project for analysis.
 
 ```bash
-vertexy build --target-dir ./my-project --out-dir ./out
+vertox build --target-dir ./my-project --out-dir ./out
 ```
 
 ### [`recap`](cli/recap.md)
@@ -19,7 +19,7 @@ vertexy build --target-dir ./my-project --out-dir ./out
 Generate an audit-oriented summary of an Anchor project.
 
 ```bash
-vertexy recap --target-dir ./my-anchor-project
+vertox recap --target-dir ./my-anchor-project
 ```
 
 ### [`scan`](cli/scan.md)
@@ -27,13 +27,13 @@ vertexy recap --target-dir ./my-anchor-project
 Run source-level security analysis with bundled and optional custom Starlark rules.
 
 ```bash
-vertexy scan --target-dir ./my-project
+vertox scan --target-dir ./my-project
 ```
 
 With custom rules:
 
 ```bash
-vertexy scan --target-dir ./my-project --rules-dir ./rules
+vertox scan --target-dir ./my-project --rules-dir ./rules
 ```
 
 ### [`fetch`](cli/fetch.md)
@@ -41,7 +41,7 @@ vertexy scan --target-dir ./my-project --rules-dir ./rules
 Fetch an on-chain program or account through Solana RPC.
 
 ```bash
-vertexy fetch --program-id <PROGRAM_ID> --out-dir ./out
+vertox fetch --program-id <PROGRAM_ID> --out-dir ./out
 ```
 
 ### [`reverse`](cli/reverse.md)
@@ -49,7 +49,7 @@ vertexy fetch --program-id <PROGRAM_ID> --out-dir ./out
 Disassemble a compiled program and generate control-flow information.
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode both \
   --bytecodes-file ./program.so \
   --out-dir ./out \
@@ -61,7 +61,7 @@ vertexy reverse \
 Reinsert selected functions into a reduced Graphviz CFG.
 
 ```bash
-vertexy dotting \
+vertox dotting \
   --config functions.json \
   --reduced-dot-path cfg_reduced.dot \
   --full-dot-path cfg.dot
@@ -72,7 +72,7 @@ vertexy dotting \
 Print Rust AST data for custom-rule development.
 
 ```bash
-vertexy ast --file-path ./src/lib.rs --starlark-syn-ast
+vertox ast --file-path ./src/lib.rs --starlark-syn-ast
 ```
 
 ## Logging
@@ -80,14 +80,14 @@ vertexy ast --file-path ./src/lib.rs --starlark-syn-ast
 Use `-v`, `-vv`, or `-vvv` for progressively more detail:
 
 ```bash
-vertexy -vv scan --target-dir ./my-project
+vertox -vv scan --target-dir ./my-project
 ```
 
 You can also set `RUST_LOG` directly.
 
 ## Compatibility aliases
 
-Vertexy keeps these aliases for users migrating from the upstream sol-azy CLI:
+VERTOX keeps these aliases for users migrating from the upstream sol-azy CLI:
 
 - `sast` → `scan`
 - `fetcher` → `fetch`

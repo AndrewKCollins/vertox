@@ -151,14 +151,14 @@ pub struct Cpi<'info> {
 When we run:
 
 ```bash
-vertexy scan \
+vertox scan \
   --target-dir ../SolanaPlayground/sealevel-attacks/ \
   --rules-dir rules/syn_ast
 ```
 
 ![alt text](../images/sast_result_abr_cpi_example.png)
 
-Vertexy successfully detects **three instances** of the vulnerability, reported as:
+VERTOX successfully detects **three instances** of the vulnerability, reported as:
 
 ```text
 ../SolanaPlayground/sealevel-attacks//programs/5-arbitrary-cpi/secure/src/lib.rs:73:11
@@ -170,7 +170,7 @@ Two are found in the `secure/` module (the source code provided above), and one 
 
 ## Summary
 
-Thanks to this template-based pattern matcher, **Vertexy** is able to:
+Thanks to this template-based pattern matcher, **VERTOX** is able to:
 
 * Statistically identify unvalidated CPI targets,
 * Highlight affected source locations with precision,

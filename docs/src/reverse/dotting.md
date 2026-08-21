@@ -1,6 +1,6 @@
 # Dotting: Customizing Reduced CFGs
 
-The `dotting` feature in Vertexy allows you to **manually augment** a reduced control flow graph (CFG) by reinserting specific function clusters from the full graph.
+The `dotting` feature in VERTOX allows you to **manually augment** a reduced control flow graph (CFG) by reinserting specific function clusters from the full graph.
 
 This is particularly useful when using `--reduced` or `--only-entrypoint` modes, which intentionally drop unused or library-heavy functions. With dotting, you can selectively restore those clusters for **targeted analysis**.
 
@@ -27,7 +27,7 @@ Instead, you can **grow your existing graph** by manually appending clusters and
    * The original full `.dot` file (reference),
    * Your reduced `.dot` file,
    * And the JSON config.
-3. Vertexy:
+3. VERTOX:
 
    * Adds matching `subgraph cluster_XX` blocks.
    * Appends new edges **only if both sides already exist** in the reduced graph.
@@ -38,7 +38,7 @@ Instead, you can **grow your existing graph** by manually appending clusters and
 ## CLI Usage
 
 ```bash
-vertexy dotting \
+vertox dotting \
   --config path/to/functions.json \
   --reduced-dot path/to/reduced.dot \
   --full-dot path/to/full.dot
@@ -75,7 +75,7 @@ subgraph cluster_42 {
 0. **[one-time action]** Generate a full graph _(It allows for easily selecting specific clusters without re-analyzing the full bytecode every time a function needs to be added)_:
 
    ```bash
-   vertexy reverse \
+   vertox reverse \
      --mode cfg \
      --bytecodes-file program.so \
      --out-dir ./full \
@@ -84,7 +84,7 @@ subgraph cluster_42 {
 1. Generate a reduced graph with only the entrypoint:
 
    ```bash
-   vertexy reverse \
+   vertox reverse \
      --mode cfg \
      --bytecodes-file program.so \
      --out-dir ./out \
@@ -102,7 +102,7 @@ subgraph cluster_42 {
 3. Run dotting:
 
    ```bash
-   vertexy dotting \
+   vertox dotting \
      --config ./functions.json \
      --reduced-dot ./out/cfg.dot \
      --full-dot ./full/cfg.dot

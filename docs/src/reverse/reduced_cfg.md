@@ -1,7 +1,7 @@
 # Reduced Control Flow Graph (CFG)
 
 Analyzing large Solana sBPF programs can produce overwhelming control flow graphs (CFGs) due to the sheer number of functions and basic blocks.
-Vertexy offers two modes to reduce graph complexity:
+VERTOX offers two modes to reduce graph complexity:
 
 * `--reduced`: Only include functions defined *after* the entrypoint.
 * `--only-entrypoint`: Include **only** the function cluster of the entrypoint itself.
@@ -15,7 +15,7 @@ The `--reduced` flag filters the generated CFG by discarding functions that are 
 ### Example
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode cfg \
   --out-dir ./out/ \
   --bytecodes-file ./program.so \
@@ -38,7 +38,7 @@ The `--only-entrypoint` flag isolates just the **entrypoint function**, without 
 ### Example
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode cfg \
   --out-dir ./out/ \
   --bytecodes-file ./program.so \

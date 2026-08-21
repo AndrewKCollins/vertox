@@ -9,13 +9,13 @@ It uses the `syn` crate to parse Rust code and `syn-serde` for JSON serializatio
 ## Usage
 
 ```bash
-vertexy ast --file-path ./src/main.rs
+vertox ast --file-path ./src/main.rs
 ```
 
 **Arguments:**
 
 - `-f, --file-path`: Path to the Rust source file to parse.
-- `-s, --starlark-syn-ast`: Emit the AST after Vertexy prepares it for Starlark rules.
+- `-s, --starlark-syn-ast`: Emit the AST after VERTOX prepares it for Starlark rules.
 
 ## Behavior
 
@@ -45,7 +45,7 @@ The command outputs a JSON representation of the AST directly to stdout. The JSO
 ## Example
 
 ``` bash
-vertexy ast --file-path examples/simple_program.rs
+vertox ast --file-path examples/simple_program.rs
 ```
 
 This would output something like:

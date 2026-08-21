@@ -8,7 +8,7 @@ It supports disassembly, control flow graph (CFG) generation, and immediate data
 ## Usage
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode both \
   --out-dir ./out/ \
   --bytecodes-file ./bytecodes/program.so \
@@ -64,7 +64,7 @@ xdot cfg.dot
 ## Example
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode both \
   --out-dir test_cases/base_sbf_addition_checker/out1/ \
   --bytecodes-file test_cases/base_sbf_addition_checker/bytecodes/addition_checker.so \
@@ -78,7 +78,7 @@ This command will disassemble the program and generate reduced CFG.
 
 ## Advanced Use Case
 
-If using `--only-entrypoint`, Vertexy will generate a minimal CFG with only the entrypoint's subgraph.
+If using `--only-entrypoint`, VERTOX will generate a minimal CFG with only the entrypoint's subgraph.
 You can later extend this graph manually using [`dotting`](../reverse/dotting.md) with a JSON list of function clusters to add.
 
 ---

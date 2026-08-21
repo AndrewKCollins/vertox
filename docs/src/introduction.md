@@ -1,15 +1,15 @@
 # Introduction
 
-![Vertexy logo](images/vertexy-logo.png)
+![VERTOX logo](images/vertox-logo.png)
 
-**Vertexy** is a modular, CLI-based toolchain designed for working with Solana programs.  
+**VERTOX** is a modular, CLI-based toolchain designed for working with Solana programs.  
 It combines **static analysis**, **reverse engineering**, and **project building** features in one streamlined developer and auditor experience.
 
 ---
 
-## What Is Vertexy?
+## What Is VERTOX?
 
-Vertexy provides tools for:
+VERTOX provides tools for:
 
 - **Building Solana programs**:
   - Supports both `Anchor` and native `SBF` workflows
@@ -43,9 +43,9 @@ Vertexy provides tools for:
 
 ---
 
-## Why Vertexy?
+## Why VERTOX?
 
-While tools like `solana`, `cargo build-sbf`, or `anchor build` focus on building and deployment, Vertexy targets:
+While tools like `solana`, `cargo build-sbf`, or `anchor build` focus on building and deployment, VERTOX targets:
 
 - **Security auditing workflows**
 - **Automated code review pipelines**
@@ -58,7 +58,7 @@ It integrates tightly with Solana's BPF toolchain and `syn` parsing to provide s
 
 ## Project Structure
 
-Vertexy is structured into several engines and CLI commands:
+VERTOX is structured into several engines and CLI commands:
 
 * [`build`](cli/build.md) – Compile programs and prepare artifacts
 * [`recap`](cli/recap.md) – Generate quick IDL+source summaries for audits (instruction tables, constraints, seeds, memory flags)

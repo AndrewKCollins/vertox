@@ -8,10 +8,10 @@ It inspects IDL(s) under `target/idl/`, tries to map each IDL to its Anchor crat
 
 ```bash
 # run recap on current directory (default) -> creates ./recap-solazy.md
-vertexy recap
+vertox recap
 
 # run recap on a specific project path (optional -p) -> creates ./recap-solazy.md in the cwd
-vertexy recap -d ../my-solana-project
+vertox recap -d ../my-solana-project
 ````
 
 **Arguments:**
@@ -70,12 +70,12 @@ The output is intended as a quick-start audit report — readable, compact, and 
 
 ```bash
 # analyze current project and generate recap-solazy.md
-vertexy recap
+vertox recap
 # or if compiled under solazy bin
 solazy recap
 
 # or analyze a specific project path
-vertexy recap -d ../helium-program-library
+vertox recap -d ../helium-program-library
 # or if compiled under solazy bin
 solazy recap -d ../helium-program-library
 ```

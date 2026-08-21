@@ -1,19 +1,19 @@
 # `scan` Command
 
-The `scan` command performs source-level security analysis on Solana Rust projects using Vertexy's Starlark rule engine.
+The `scan` command performs source-level security analysis on Solana Rust projects using VERTOX's Starlark rule engine.
 
 ## Basic usage
 
 Run the bundled rules against one Anchor or native SBF project:
 
 ```bash
-vertexy scan --target-dir ./my-project
+vertox scan --target-dir ./my-project
 ```
 
 Add custom rules from a directory:
 
 ```bash
-vertexy scan \
+vertox scan \
   --target-dir ./my-project \
   --rules-dir ./rules
 ```
@@ -21,7 +21,7 @@ vertexy scan \
 Use only your external rules:
 
 ```bash
-vertexy scan \
+vertox scan \
   --target-dir ./my-project \
   --rules-dir ./rules \
   --no-internal-rules
@@ -30,7 +30,7 @@ vertexy scan \
 To discover and scan multiple Solana projects beneath a directory, opt into recursion:
 
 ```bash
-vertexy scan \
+vertox scan \
   --target-dir ./workspace \
   --recursive
 ```

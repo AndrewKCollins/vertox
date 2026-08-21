@@ -1,6 +1,6 @@
 # Installation
 
-Vertexy is distributed as a Rust command-line application.
+VERTOX is distributed as a Rust command-line application.
 
 ## Requirements
 
@@ -24,15 +24,15 @@ cargo --version
 ## Build from source
 
 ```bash
-git clone <your-vertexy-repository-url>
-cd vertexy
+git clone <your-vertox-repository-url>
+cd vertox
 cargo build --release
 ```
 
 The binary will be written to:
 
 ```text
-target/release/vertexy
+target/release/vertox
 ```
 
 Install it into Cargo's binary directory with:
@@ -44,13 +44,13 @@ cargo install --path .
 Confirm the CLI is available:
 
 ```bash
-vertexy --help
-vertexy --version
+vertox --help
+vertox --version
 ```
 
 ## Run without installing
 
-During development, prefix Vertexy arguments with `cargo run --`:
+During development, prefix VERTOX arguments with `cargo run --`:
 
 ```bash
 cargo run -- scan --target-dir ./my-project
@@ -73,6 +73,6 @@ mdbook serve docs --open
 
 ## Troubleshooting
 
-If `vertexy build` fails, first check that the project can be built directly with the same Solana or Anchor toolchain. Solana build tooling can select a Rust toolchain that differs from your system toolchain, so version mismatches in the target project should be resolved at the Solana or Anchor level rather than by editing lockfile formats by hand.
+If `vertox build` fails, first check that the project can be built directly with the same Solana or Anchor toolchain. Solana build tooling can select a Rust toolchain that differs from your system toolchain, so version mismatches in the target project should be resolved at the Solana or Anchor level rather than by editing lockfile formats by hand.
 
 For reverse engineering, confirm the input is an ELF shared object produced for Solana SBF. For network failures in `fetch`, retry with an explicit RPC endpoint using `--rpc-url`.

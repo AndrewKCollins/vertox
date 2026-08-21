@@ -1,6 +1,6 @@
 # Reverse Engineering
 
-Vertexy provides a reverse engineering module tailored for Solana programs compiled to eBPF.  
+VERTOX provides a reverse engineering module tailored for Solana programs compiled to eBPF.  
 It allows you to **disassemble** `.so` binaries, **extract control flow**, and **track embedded immediate data**.
 
 This tooling is especially useful for:
@@ -37,7 +37,7 @@ You pass the `.so` file using `--bytecodes-file`.
 
 ## Output
 
-Depending on the selected mode, Vertexy produces one or more of the following:
+Depending on the selected mode, VERTOX produces one or more of the following:
 
 | File                          | Description                                       |
 |-------------------------------|---------------------------------------------------|
@@ -55,7 +55,7 @@ dot -Tpng cfg.dot -o cfg.png
 
 ## Subsections
 
-To dive deeper into how reverse analysis works in Vertexy:
+To dive deeper into how reverse analysis works in VERTOX:
 
 - [Disassembly](reverse/disassembly.md)
 - [Control Flow Graph](reverse/cfg.md)
@@ -66,7 +66,7 @@ To dive deeper into how reverse analysis works in Vertexy:
 ## Usage Example
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode both \
   --out-dir ./out/ \
   --bytecodes-file ./bytecodes/program.so \
@@ -85,8 +85,8 @@ vertexy reverse \
 
 ## Note
 
-The reverse engineering core in Vertexy is based on the excellent open-source project  
+The reverse engineering core in VERTOX is based on the excellent open-source project  
 [`anza-xyz/sbpf`](https://github.com/anza-xyz/sbpf) by [Anza (anza-xyz)](https://github.com/anza-xyz).
 
-We have modified and extended its disassembly and control flow analysis logic to better fit Vertexy’s needs,
+We have modified and extended its disassembly and control flow analysis logic to better fit VERTOX’s needs,
 especially for static audits, immediate tracking, and custom export formats.

@@ -1,6 +1,6 @@
 # `AppState` architecture
 
-`AppState` is the small runtime dispatcher behind Vertexy's CLI. It owns the parsed command and the build or scan state collected during execution.
+`AppState` is the small runtime dispatcher behind VERTOX's CLI. It owns the parsed command and the build or scan state collected during execution.
 
 ## Location
 
@@ -22,7 +22,7 @@ The command-line parser is defined in `src/main.rs`. `AppState::run_cli()` then 
 
 ## Error behavior
 
-`run_cli()` returns `anyhow::Result<()>`. Command errors are propagated to `main` instead of being logged and discarded. This matters for automation because a failed Vertexy command produces a non-zero process exit status.
+`run_cli()` returns `anyhow::Result<()>`. Command errors are propagated to `main` instead of being logged and discarded. This matters for automation because a failed VERTOX command produces a non-zero process exit status.
 
 Conceptually:
 

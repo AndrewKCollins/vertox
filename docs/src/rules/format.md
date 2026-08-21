@@ -1,6 +1,6 @@
 # Rule Format
 
-Vertexy allows developers and auditors to write custom **static analysis rules** using the [Starlark language](https://github.com/bazelbuild/starlark) — a Python-like configuration language used by projects like [Bazel](https://bazel.build/rules/language) and [Buck/Buck2](https://github.com/facebook/buck2) ([Buck2 docs](https://buck2.build/docs/developers/starlark/environment/)).
+VERTOX allows developers and auditors to write custom **static analysis rules** using the [Starlark language](https://github.com/bazelbuild/starlark) — a Python-like configuration language used by projects like [Bazel](https://bazel.build/rules/language) and [Buck/Buck2](https://github.com/facebook/buck2) ([Buck2 docs](https://buck2.build/docs/developers/starlark/environment/)).
 
 These rules are evaluated against the **Rust AST** (Abstract Syntax Tree) of a Solana program, enabling precise pattern matching to detect vulnerabilities or code smells.
 
@@ -45,7 +45,7 @@ def syn_ast_rule(root: dict) -> list[dict]:
 
 ## Execution Flow
 
-When Vertexy runs a rule:
+When VERTOX runs a rule:
 
 1. It parses the source code into an AST
 2. Converts it to JSON
@@ -55,7 +55,7 @@ When Vertexy runs a rule:
 
 ## Helper Libraries
 
-Vertexy ships with built-in Vertexy helpers (written in Starlark):
+VERTOX ships with built-in VERTOX helpers (written in Starlark):
 
 ```
 src/static/starlark_libs/
@@ -78,7 +78,7 @@ To create a new rule:
 
 1. Create a `.star` file in your rules directory
 2. Define `RULE_METADATA` and `syn_ast_rule(...)`
-3. Use `vertexy scan ...` to apply the rule
+3. Use `vertox scan ...` to apply the rule
 
 
 ## Documentation

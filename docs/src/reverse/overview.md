@@ -1,6 +1,6 @@
 # Reverse Overview
 
-This section explains how Vertexy performs static reverse engineering on Solana programs compiled to SBF.
+This section explains how VERTOX performs static reverse engineering on Solana programs compiled to SBF.
 
 The reverse module combines disassembly, control flow analysis, and memory inspection, using a customized static analysis engine adapted from [`anza-xyz/sbpf`](https://github.com/anza-xyz/sbpf).
 
@@ -10,7 +10,7 @@ The reverse module combines disassembly, control flow analysis, and memory inspe
 
 1. **ELF Parsing**
 
-   Vertexy loads the `.so` bytecode using Solana’s `Executable` abstraction (from `solana_sbpf`), which parses the ELF and loads its segments (e.g., `.text`, `.rodata`).
+   VERTOX loads the `.so` bytecode using Solana’s `Executable` abstraction (from `solana_sbpf`), which parses the ELF and loads its segments (e.g., `.text`, `.rodata`).
 
 2. **Instruction Analysis**
 
@@ -22,7 +22,7 @@ The reverse module combines disassembly, control flow analysis, and memory inspe
 
 3. **Immediate Tracking**
 
-   When `LD_DW_IMM` instructions reference `MM_RODATA`, Vertexy tries to:
+   When `LD_DW_IMM` instructions reference `MM_RODATA`, VERTOX tries to:
 
    - Interpret the referenced memory slice
    - Associate it with a `MOV64_IMM` or `MOV32_IMM` defining its length
@@ -60,7 +60,7 @@ pub enum ReverseOutputMode {
 ## Example Workflow (Recap)
 
 ```bash
-vertexy reverse \
+vertox reverse \
   --mode both \
   --out-dir ./out/ \
   --bytecodes-file ./bytecodes/program.so \

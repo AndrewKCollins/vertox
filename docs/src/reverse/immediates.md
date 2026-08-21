@@ -1,6 +1,6 @@
 # Immediate Data Tracking
 
-Vertexy performs tracking of immediate values loaded from `.rodata` via `LD_DW_IMM` instructions.  
+VERTOX performs tracking of immediate values loaded from `.rodata` via `LD_DW_IMM` instructions.  
 This feature is crucial to recover strings, error messages, and embedded constants that are otherwise opaque in the bytecode.
 
 ---
@@ -16,7 +16,7 @@ mov64  r2, 9
 
 - The `lddw` instruction loads an offset in `.rodata`
 - The `mov64` gives a length (usually in bytes)
-- Vertexy uses these two to extract a slice of memory and decode it
+- VERTOX uses these two to extract a slice of memory and decode it
 
 If the memory region looks printable (ASCII-compatible), it is rendered as a string like:
 
@@ -100,7 +100,7 @@ which escapes non-printables and prints ASCII as-is.
 ### LD_DW_IMM: Key Instructions and Address Keys
 
 The tracking system is triggered **exclusively** by `LD_DW_IMM` instructions, which are used to load 64-bit constants.  
-When such an instruction loads an address greater than or equal to `MM_RODATA_START`, Vertexy considers it a `.rodata` access.
+When such an instruction loads an address greater than or equal to `MM_RODATA_START`, VERTOX considers it a `.rodata` access.
 
 These addresses become the **keys** of the `immediate_data_table.out` output.
 
@@ -120,7 +120,7 @@ This results in:
 ### Range Truncation: Avoiding Overlaps
 
 In programs with many `LD_DW_IMM`, multiple memory regions may point into the same `.rodata` segment.  
-To avoid overlap between two string regions, Vertexy performs **forward truncation**:
+To avoid overlap between two string regions, VERTOX performs **forward truncation**:
 
 - It registers each `LD_DW_IMM` address (`new_start`)
 - It finds the **next closest start** already known
@@ -156,7 +156,7 @@ lddw r1, 0x1000043e0      ; key #1
 lddw r2, 0x1000043e8      ; key #2, appears later in bytecode
 ```
 
-Even if the length for key #1 is unclear (or too long), Vertexy will **truncate its range** to stop at `0x1000043e8`.
+Even if the length for key #1 is unclear (or too long), VERTOX will **truncate its range** to stop at `0x1000043e8`.
 
 This avoids having `"You win!" + "You lose!"` accidentally merged into one blob, since both of them will be used independently by separate `LD_DW_IMM` instructions.
 
@@ -168,7 +168,7 @@ This avoids having `"You win!" + "You lose!"` accidentally merged into one blob,
 > hor64  r1, 0x10000000     ; set upper 32 bits → r1 = 0x1000000000003000
 > ```
 >
-> Vertexy handles this by:
+> VERTOX handles this by:
 >
 > 1. **Tracking register values** using a `RegisterTracker`
 > 2. **Do an "emulation"** of `mov` and `hor64`
